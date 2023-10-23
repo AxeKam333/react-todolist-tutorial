@@ -1,4 +1,4 @@
-#create react app
+# create react app
 
 ```
 npm create vite@lastest
