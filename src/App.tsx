@@ -1,51 +1,35 @@
-import { useEffect, useState } from "react"
-import "./style.css"
-import { TodoForm } from "./TodoForm"
-import { TodoList } from "./TodoList"
+import { useState } from "react";
+import Section from "./Section";
 
 export default function App() {
-  const [todos, setTodos] = useState<Array<any>>(() => {
-   const localValue = localStorage.getItem("ITEMS")
-    if (localValue == null) return []
-    return JSON.parse(localValue)
-  })
+  const [sections, setSections] = useState<Array<any>>([
+    "1",
+    "2",
+    "3",
+  ]);
+  const [newSection,setNewSection] = useState<any>();
 
-  useEffect(() => {
-    localStorage.setItem("ITEMS", JSON.stringify(todos))
-  },[todos])
+  function createSection(e: any) {
+    e.preventDefault()
+    if (newSection === "") return
 
-  function addTodo(newItem:string) {
-    const todoObject = {
-      id: crypto.randomUUID(),
-      title: newItem,
-      completed: false
-    }
-    setTodos(currnetTodos => [...currnetTodos, todoObject])
-  }
+    setSections(sections => [...sections, newSection])
 
-  function toggleTodo(id: string, completed: boolean) {
-    setTodos(currentTodos => {
-      return currentTodos.map(todo => {
-        if (todo.id === id) {
-          return {...todo, completed}
-        }
-        return todo
-      }
-    )})
-  }
-
-  function deleteTodo(id:string) {
-    setTodos(currentTodo => {
-      return currentTodo.filter(todo => todo.id !== id)
-    })
+    setNewSection("")
   }
 
   return (
-    <>
-      <h1>Todo List App</h1>
-      <TodoForm onSubmit={addTodo}/>
-      <h2 className="header">List</h2>
-      <TodoList todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo}/>
-    </>
-  )
+    <div className="wraper">
+      {sections.map((sect) => {
+        return <Section>{sect}</Section>;
+      })}
+      {sections.length < 5 && (
+        <form onSubmit={createSection}>
+          <h2>add section</h2>
+          <input value={newSection} onChange={e => setNewSection(e.target.value)} type="text"></input>
+          <button>Add</button>
+        </form>
+      )}
+    </div>
+  );
 }
