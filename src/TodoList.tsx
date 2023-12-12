@@ -1,13 +1,15 @@
+import { useContext } from "react";
 import { TodoItem } from "./TodoItem"
+import { TodosContext } from "./Contexts"
 
 
 interface TodoListProps {
-    todos: Array<any>,
     toggleTodo:any,
     deleteTodo:any,
 }
 
-export function TodoList({ todos,toggleTodo,deleteTodo }:TodoListProps) {
+export function TodoList({ toggleTodo,deleteTodo }:TodoListProps) {
+      const todos = useContext(TodosContext);
     return (
         <ul className="list">
         {todos.length === 0 && <p>(Add your Todos here)</p>}
