@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./style.css";
 import { TodoForm } from "./TodoForm";
 import { TodoList } from "./TodoList";
-import { TodosContext } from "./Contexts";
+import { TodosContext, UseStateContext } from "./Contexts";
 import { Wrapper } from "./Wrapper";
 
 export default function Section({ children }: any) {
@@ -51,9 +51,13 @@ export default function Section({ children }: any) {
       <TodoForm onSubmit={addTodo} />
       <h2 className="header">List</h2>
       <TodosContext.Provider value={todos}>
-        <Wrapper value={todos}>
-          <TodoList toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
-        </Wrapper>
+        <UseStateContext.Provider
+          value={{ toggle: toggleTodo, delete: deleteTodo }}
+        >
+          <Wrapper value={todos}>
+            <TodoList />
+          </Wrapper>
+        </UseStateContext.Provider>
       </TodosContext.Provider>
     </div>
   );
