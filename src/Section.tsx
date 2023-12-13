@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./style.css";
 import { TodoForm } from "./TodoForm";
 import { TodoList } from "./TodoList";
 import { TodosContext } from "./Contexts";
+import { Wrapper } from "./Wrapper";
 
 export default function Section({ children }: any) {
   const [todos, setTodos] = useState<Array<any>>(
@@ -50,7 +51,9 @@ export default function Section({ children }: any) {
       <TodoForm onSubmit={addTodo} />
       <h2 className="header">List</h2>
       <TodosContext.Provider value={todos}>
-        <TodoList toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
+        <Wrapper value={todos}>
+          <TodoList toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
+        </Wrapper>
       </TodosContext.Provider>
     </div>
   );

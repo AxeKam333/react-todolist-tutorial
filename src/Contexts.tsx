@@ -5,3 +5,9 @@ export const TodosContext = createContext([{
     title: 'test',
     completed: false
   }]);
+
+  export const InterpretedContext = createContext([{
+    id: crypto.randomUUID(),
+    title: 'test xd',
+    completed: false
+  }])
